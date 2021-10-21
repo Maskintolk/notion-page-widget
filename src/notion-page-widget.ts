@@ -78,7 +78,7 @@ export class NotionPageWidget extends LitElement {
 
   private underConstructionTemplate() {
     return html` <div>
-        <a href="${this.pageUrl}">
+        <a href="${this.pageUrl}" target="_parent">
           <img src="${this.imageUrl}" />
         </a>
       </div>
