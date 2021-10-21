@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + Lit App</title>
+    <script type="module" src="/src/notion-page-widget.ts"></script>
+  </head>
+  <body>
+    <notion-page-widget> </notion-page-widget>
+  </body>
+</html>
+<script language="javascript">
+  // Find the Notion image element on the page
+  const elm = document.querySelector("notion-page-widget");
+
+  if (elm) {
+    // Look for supported query string arguments and set the corresponding properties on the element
+    const args = ["pageid", "size"];
+
+    // We don't want to fail on case sensitive arguments
+    const url = window.location.href.toLocaleLowerCase();
+
+    args.forEach((arg) => {
+      const exp = `${arg}=(.+)`;
+      const match = url.match(new RegExp(exp));
+      if (match && match[1]) {
+        elm[arg] = match[1];
+      }
+    });
+  }
+</script>

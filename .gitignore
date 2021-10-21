@@ -1,0 +1,9 @@
+node_modules
+.DS_Store
+dist
+types
+*.local
+.env
+hello-world.ts
+.netlify
+test

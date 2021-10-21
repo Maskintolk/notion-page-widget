@@ -1,0 +1,26 @@
+{
+  "name": "notion-page-widget",
+  "version": "0.0.1",
+  "main": "dist/notion-page-widget.es.js",
+  "exports": {
+    ".": "./dist/notion-page-widget.es.js"
+  },
+  "types": "types/my-element.d.ts",
+  "files": [
+    "dist",
+    "types"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build"
+  },
+  "dependencies": {
+    "lit": "*"
+  },
+  "devDependencies": {
+    "@notionhq/client": "^0.3.1",
+    "dotenv": "^10.0.0",
+    "typescript": "^4.3.2",
+    "vite": "^2.5.2"
+  }
+}
