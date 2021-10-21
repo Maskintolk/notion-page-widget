@@ -4,7 +4,7 @@ import { defineConfig } from "vite";
 export default defineConfig({
   build: {
     lib: {
-      entry: "src/notion-page-widget.ts",
+      entry: "./index.html",
       formats: ["es"],
     },
     rollupOptions: {
