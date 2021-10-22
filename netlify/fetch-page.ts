@@ -1,6 +1,7 @@
-import { Client } from "@notionhq/client";
-import dotenv from "dotenv";
-import { NotionPage } from "../src/NotionPageType";
+import { Client } from '@notionhq/client';
+import dotenv from 'dotenv';
+
+import { NotionPage } from '../src/NotionPageType';
 
 dotenv.config();
 
@@ -12,58 +13,55 @@ exports.handler = async function (event, context) {
     const notion = new Client({ auth: NOTION_SECRET });
     const pageId = event.queryStringParameters.pageid;
 
-    // console.log({ pageId });
-
     const payload = {
-      path: `databases/${NOTION_DATABASE_ID}/query`,
-      method: "POST",
+      path: `pages/${pageId}`,
+      method: 'GET',
     };
 
-    const { results } = await notion.request(payload);
-
-    let page: NotionPage = {
-      cover: {
-        url: "",
-      },
-      icon: {
-        type: "",
-        emoji: "",
-        url: "",
-      },
-      title: "",
-      url: "",
-    };
+    const notionPage = await notion.request(payload);
 
     // https://www.notion.so/jakobskov/Boghallen-Bookstore-64242e0e61b14ab1a49541d125e4a9ac
     // Example page: "64242e0e-61b1-4ab1-a495-41d125e4a9ac"
-    results.forEach((element) => {
-      console.log(element.id);
+    if (notionPage) {
+      let page: NotionPage = {
+        cover: {
+          url: '',
+        },
+        icon: {
+          type: '',
+          emoji: '',
+          url: '',
+        },
+        title: '',
+        url: '',
+      };
 
-      if (element.id === pageId) {
-        // Page
-        page.title = element?.properties?.Name?.title[0]?.text?.content;
-        page.url = element?.url;
+      // Page
+      page.title = notionPage?.properties?.Name?.title[0]?.text?.content;
+      page.url = notionPage?.url;
 
-        // Cover image
-        page.cover.url = element?.cover?.external?.url;
+      // Cover image
+      page.cover.url = notionPage?.cover?.external?.url;
 
-        // Icon
-        page.icon.type = element.icon.type;
-        page.icon.emoji = element.icon?.emoji;
-      }
-    });
+      // Icon
+      page.icon.type = notionPage.icon.type;
+      page.icon.emoji = notionPage.icon?.emoji;
 
-    // console.log(page);
+      return {
+        statusCode: 200,
+        body: JSON.stringify(page),
+      };
+    }
 
     return {
-      statusCode: 200,
-      body: JSON.stringify(page),
+      statusCode: 404,
+      body: 'Page not found',
     };
   } catch (error) {
     return {
       statusCode: 500,
       body: JSON.stringify({
-        message: "Error!",
+        message: 'Error!',
         error: error,
       }),
     };
