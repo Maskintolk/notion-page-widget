@@ -53,7 +53,12 @@ export class NotionPageWidget extends LitElement {
   /**
    * If we can't fetch the page from Notion, we use this to display the error template
    */
-  isError: boolean = false;
+  private isError: boolean = false;
+
+  public setError(message: string) {
+    this.isError = true;
+    this.pageTitle = message;
+  }
 
   render() {
     return this.isError

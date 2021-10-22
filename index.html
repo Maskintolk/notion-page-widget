@@ -88,8 +88,8 @@
       elm.pageTitle = page.title;
       elm.emoji = page.icon?.emoji;
     } else {
-      elm.isError = true;
-      elm.pageTitle = 'HTTP-Error: ' + response.status;
+      const error = await response.json();
+      elm.setError(error.message);
     }
   };
 </script>
