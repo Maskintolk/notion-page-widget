@@ -5,7 +5,10 @@
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + Lit App</title>
-    <script type="module" src="/src/notion-page-widget.ts"></script>
+    <script
+      type="module"
+      src="/src/notion-page-widget/notion-page-widget.ts"
+    ></script>
     <style>
       * {
         box-sizing: border-box;
@@ -66,5 +69,27 @@
     }
 
     document.documentElement.setAttribute('data-theme', theme);
+
+    if (elm) {
+      getNotionPage(elm, elm.pageid);
+    }
+  };
+
+  const getNotionPage = async (elm, pageId) => {
+    const workerUrl = new Request(
+      `/.netlify/functions/fetch-page?pageid=${pageId}`
+    );
+    const response = await fetch(workerUrl);
+    if (response.ok) {
+      const page = await response.json();
+
+      elm.imageUrl = page.cover?.url || elm.imageUrl;
+      elm.pageUrl = page.url;
+      elm.pageTitle = page.title;
+      elm.emoji = page.icon?.emoji;
+    } else {
+      elm.isError = true;
+      elm.pageTitle = 'HTTP-Error: ' + response.status;
+    }
   };
 </script>
