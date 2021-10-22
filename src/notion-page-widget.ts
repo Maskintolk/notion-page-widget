@@ -1,12 +1,12 @@
-import { LitElement, html, css } from "lit";
-import { customElement, property } from "lit/decorators.js";
-import { NotionPage } from "./NotionPageType";
+import { LitElement, html, css } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { NotionPage } from './NotionPageType';
 
 /**
  * An element which fetches a page from Notion from its id, and
  * displays the cover image as a link to the page.
  */
-@customElement("notion-page-widget")
+@customElement('notion-page-widget')
 export class NotionPageWidget extends LitElement {
   static styles = css`
     :host {
@@ -19,26 +19,27 @@ export class NotionPageWidget extends LitElement {
 
       display: block;
       position: relative;
-      width: var(--width);
-      height: var(--height);
       border-radius: 10px;
       overflow: hidden;
+      background-color: transparent;
+      width: var(--width);
+      height: var(--height);
     }
-    :host([size="large"]) {
+    :host([size='large']) {
       --width: 375px;
       --height: 375px;
       --font-size: 40px;
       --emoji-font-size: 64px;
       --emoji-top-pos: 86px;
     }
-    :host([size="medium"]) {
+    :host([size='medium']) {
       --width: 277px;
       --height: 277px;
       --font-size: 30px;
       --emoji-font-size: 48px;
       --emoji-top-pos: 65px;
     }
-    :host([size="small"]) {
+    :host([size='small']) {
       --width: 218px;
       --height: 218px;
       --font-size: 20px;
@@ -104,36 +105,36 @@ export class NotionPageWidget extends LitElement {
    * an environment variable in .env called NOTION_DATABASE_ID.
    */
   @property({ type: String })
-  pageid = "";
+  pageid = '';
 
   /**
    * The size determines how big the widget is displayed. The sizes correspond to the sizes of
    * pages in a Gallery view in Notion.
    */
   @property({ type: String, reflect: true })
-  size: "small" | "medium" | "large" = "medium";
+  size: 'small' | 'medium' | 'large' = 'medium';
 
   /**
    * Title of the Notion page
    */
   @property({ type: String })
-  pageTitle: string | undefined = "";
+  pageTitle: string | undefined = '';
 
   /**
    * The url of the image. Initially set to a spinner
    */
   imageUrl =
-    "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.gannett-cdn.com%2F-mm-%2F438112d08852a5cf64fb668899b62a1c6abcfadb%2Fc%3D0-104-5312-3105%26r%3Dx1683%26c%3D3200x1680%2Flocal%2F-%2Fmedia%2F2017%2F05%2F23%2FWIGroup%2FAppleton%2F636311326049773956-UC.jpg&f=1&nofb=1";
+    'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.gannett-cdn.com%2F-mm-%2F438112d08852a5cf64fb668899b62a1c6abcfadb%2Fc%3D0-104-5312-3105%26r%3Dx1683%26c%3D3200x1680%2Flocal%2F-%2Fmedia%2F2017%2F05%2F23%2FWIGroup%2FAppleton%2F636311326049773956-UC.jpg&f=1&nofb=1';
 
   /**
    * The link to the page in Notion with the pageid
    */
-  pageUrl: string = "";
+  pageUrl: string = '';
 
   /**
    * The page icon when the type is emoji
    */
-  emoji: string = "";
+  emoji: string = '';
 
   /**
    * If we can't fetch the page from Notion, we use this to display the error template
@@ -156,13 +157,13 @@ export class NotionPageWidget extends LitElement {
       this.emoji = page.icon?.emoji;
     } else {
       this.isError = true;
-      this.pageTitle = "HTTP-Error: " + response.status;
+      this.pageTitle = 'HTTP-Error: ' + response.status;
     }
   }
 
   update(changedProperties: Map<string, any>) {
-    if (changedProperties.has("pageid")) {
-      if (this.pageid !== null && this.pageid !== "") {
+    if (changedProperties.has('pageid')) {
+      if (this.pageid !== null && this.pageid !== '') {
         this.getNotionPage(this.pageid);
       }
     }
@@ -172,7 +173,7 @@ export class NotionPageWidget extends LitElement {
   render() {
     return this.isError
       ? this.underConstructionTemplate()
-      : this.pageTitle !== ""
+      : this.pageTitle !== ''
       ? this.template()
       : this.waitingTemplate();
   }
@@ -180,6 +181,6 @@ export class NotionPageWidget extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "notion-page-widget": NotionPageWidget;
+    'notion-page-widget': NotionPageWidget;
   }
 }
