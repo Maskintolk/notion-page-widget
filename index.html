@@ -42,6 +42,7 @@
   const init = () => {
     // Default theme
     let theme = 'dark';
+    let pageid = '';
 
     // Find the Notion image element on the page
     const elm = document.querySelector('notion-page-widget');
@@ -61,7 +62,9 @@
         if (arg === 'theme') {
           theme = val;
         } else {
-          if (elm) {
+          if (arg === 'pageid') {
+            pageid = val;
+          } else if (elm) {
             elm[arg] = val;
           }
         }
@@ -71,7 +74,7 @@
     document.documentElement.setAttribute('data-theme', theme);
 
     if (elm) {
-      getNotionPage(elm, elm.pageid);
+      getNotionPage(elm, pageid);
     }
   };
 

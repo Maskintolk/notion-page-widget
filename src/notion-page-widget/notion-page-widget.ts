@@ -21,8 +21,6 @@ export class NotionPageWidget extends LitElement {
   @property({ type: String, reflect: true })
   size: 'small' | 'medium' | 'large' = 'medium';
 
-  pageid: string;
-
   /**
    * Title of the Notion page
    */
@@ -32,17 +30,19 @@ export class NotionPageWidget extends LitElement {
   /**
    * The url of the image. Initially set to a spinner
    */
-  imageurl =
-    'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.gannett-cdn.com%2F-mm-%2F438112d08852a5cf64fb668899b62a1c6abcfadb%2Fc%3D0-104-5312-3105%26r%3Dx1683%26c%3D3200x1680%2Flocal%2F-%2Fmedia%2F2017%2F05%2F23%2FWIGroup%2FAppleton%2F636311326049773956-UC.jpg&f=1&nofb=1';
+  @property({ type: String })
+  imageurl = '';
 
   /**
    * The link to the page in Notion
    */
+  @property({ type: String })
   pageurl: string = '';
 
   /**
    * The page icon when the type is emoji
    */
+  @property({ type: String })
   emoji: string = '';
 
   /**
