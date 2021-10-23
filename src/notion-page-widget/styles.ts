@@ -53,6 +53,7 @@ export const styles = css`
     color: #fff;
     text-align: center;
     font-size: var(--font-size);
+    padding: 10px;
   }
   p {
     position: absolute;
@@ -60,5 +61,8 @@ export const styles = css`
     color: rgb(255, 255, 255);
     top: var(--emoji-top-pos);
     font-size: var(--emoji-font-size);
+  }
+  a {
+    text-decoration: none;
   }
 `;

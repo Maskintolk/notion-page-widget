@@ -83,9 +83,9 @@
     if (response.ok) {
       const page = await response.json();
 
-      elm.imageUrl = page.cover?.url || elm.imageUrl;
-      elm.pageUrl = page.url;
-      elm.pageTitle = page.title;
+      elm.imageurl = page.cover?.url || elm.imageUrl;
+      elm.pageurl = page.url;
+      elm.pagetitle = page.title;
       elm.emoji = page.icon?.emoji;
     } else {
       const error = await response.json();
